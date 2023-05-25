@@ -65,6 +65,7 @@ const clickButton = () =>{
 </script>
 
 <template>
+    
     <AppLayout title="Carros">
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center">
