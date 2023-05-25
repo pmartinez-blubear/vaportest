@@ -47,8 +47,16 @@ const logout = () => {
 
 // 
 const navigation = [
-  { name: 'Dashboard', href: 'dashboard',  current: true },
-  { name: 'Carros', href: 'carros',  current: false },
+  { name: 'Dashboard', href: 'dashboard',  current: true, icon:'fa-solid fa-border-all' },
+  { name: 'Carros', href: 'carros',  current: false, icon:'fa-solid fa-car-side' },
+  { name: 'Paginas', href: '#', children:[],  current: false, icon:'fa-solid fa-pager' },
+  { name: 'Marcas', href: 'marcas',  current: false, icon:'fa-solid fa-car' },
+  { name: 'Categoria', href: 'categoria', current: false, icon:'fa-solid fa-list' },
+  { name: 'Links SEO', href: 'links',  current: false, icon:'fa-solid fa-link' },
+  { name: 'Solicitudes', href: 'links', current: false, icon:'fa-solid fa-inbox' },
+  { name: 'Agencias', href: 'links',  current: false, icon:'fa-solid fa-store' },
+  { name: 'Redes Sociales', href: 'links', current: false, icon:'fa-solid fa-hashtag' },
+  { name: 'Usuarios', href: 'links', children:[],  current: false, icon:'fa-solid fa-user-group' },
 ]
 
 const userNavigation = [
@@ -119,25 +127,21 @@ const menuOptions = ref(false);
             <!-- Static sidebar for desktop -->
             <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
               <!-- Sidebar component, swap this element with another sidebar if you like -->
-              <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
-                <div class="flex h-16 shrink-0 items-center">
+              <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 pb-4">
+                <div class="flex h-16 shrink-0 items-center px-6">
                   <img  src="/images/logo.svg" alt="Your Company"  class="w-30 invert grayscale"/>
                 </div>
                 <nav class="flex flex-1 flex-col">
                   <ul role="list" class="flex flex-1 flex-col gap-y-7">
                     <li>
-                      <ul role="list" class="-mx-2 space-y-1">
-                        <li v-for="item in navigation" :key="item.name">
-                          <Link :href="item.href" :class="[route().current() === item.name.toLowerCase() ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                      <ul role="list" class=" w-full">
+                        <li v-for="item in navigation" :key="item.name" class="py-2">
+                          <Link :href="item.href" class="flex items-center px-6" :class="[route().current() === item.name.toLowerCase() ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800', 'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold']">
+                            <font-awesome-icon :icon="item.icon" />
                             {{ item.name }}
                           </Link>
                         </li>
                       </ul>
-                    </li>
-                    <li class="mt-auto">
-                      <a href="#" class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
-                        Settings
-                      </a>
                     </li>
                   </ul>
                 </nav>
@@ -154,21 +158,8 @@ const menuOptions = ref(false);
                 <!-- Separator -->
                 <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true" />
         
-                <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-                  <form class="relative flex flex-1" action="#" method="GET">
-                    <label for="search-field" class="sr-only">Search</label>
-                    <MagnifyingGlassIcon class="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400" aria-hidden="true" />
-                    <input id="search-field" class="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm" placeholder="Search..." type="search" name="search" />
-                  </form>
-                  <div class="flex items-center gap-x-4 lg:gap-x-6">
-                    <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-                      <span class="sr-only">View notifications</span>
-                      <BellIcon class="h-6 w-6" aria-hidden="true" />
-                    </button>
-        
-                    <!-- Separator -->
-                    <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10" aria-hidden="true" />
-        
+                <div class="flex flex-1 justify-end gap-x-4 self-stretch lg:gap-x-6">
+                  <div class="flex items-center gap-x-4 lg:gap-x-6">        
                     <!-- Profile dropdown -->
                     <Menu as="div" class="relative">
                       <MenuButton class="-m-1.5 flex items-center p-1.5">

@@ -1,6 +1,11 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { toRefs } from "vue";
+import { toRefs, toRef } from "vue";
+import TitlePage from '@/Components/common/TitlePage.vue'
+import Input from "@/Components/forms/Input.vue";
+import Checkbox from "@/Components/forms/Checkbox.vue";
+import Label from "@/Components/forms/Label.vue";
+import PrimaryButton from '@/Components/common/PrimaryButton.vue';
 
 const props = defineProps({ cars: Object });
 
@@ -8,6 +13,13 @@ const { cars } = toRefs(props);
 
 console.log(cars.value);
 
+
+const email = toRef('');
+const air = toRef('');
+
+const inputEvent = () =>{
+
+}
 </script>
 
 <template>
@@ -15,9 +27,7 @@ console.log(cars.value);
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
-                    <h1 class="text-base font-semibold leading-6 text-gray-900">
-                        Carros
-                    </h1>
+                    <TitlePage>Carros</TitlePage>
                     <p class="mt-2 text-sm text-gray-700">Listado de autos</p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -125,6 +135,39 @@ console.log(cars.value);
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="grid grid-cols-1">
+            <Input 
+                label="Codigo U."
+                @input="inputEvent"
+                v-model:input="email"
+                placeholder="user@example.com" 
+                :disabled="false"
+                error=""
+            />
+        </div>
+        <div class="grid grid-cols-1 my-6">
+            <Input 
+                label="Precios WOW"
+                type="date"
+                @input="inputEvent"
+                v-model:input="email"
+                placeholder="user@example.com" 
+                labelColor="text-brown-500"
+                :disabled="false"
+                error=""
+            />
+        </div>
+        <div class="grid grid-cols-1 my-6">
+            <Label>Aire acondicionado</Label>
+            <div class="flex">
+                <Checkbox label="SI" v-model:input="air" value="SI" class="mr-6"/> 
+                <Checkbox label="NO" v-model:input="air" value="NO"/> 
+            </div>
+        </div>
+        <div class="flex my-6 gap-6">
+            <PrimaryButton  icon="fa-solid fa-xmark-circle" width="max-w-[200px]" bg-color="bg-gray-400 hover:bg-gray-500">Cancelar</PrimaryButton>
+            <PrimaryButton  icon="fa-solid fa-floppy-disk" width="max-w-[200px]">Guardar</PrimaryButton>
         </div>
     </AppLayout>
 </template>
