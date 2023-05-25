@@ -1,11 +1,16 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
-import { toRefs, toRef } from "vue";
+import { toRefs, ref } from "vue";
 import TitlePage from '@/Components/common/TitlePage.vue'
 import Input from "@/Components/forms/Input.vue";
 import Checkbox from "@/Components/forms/Checkbox.vue";
 import Label from "@/Components/forms/Label.vue";
 import PrimaryButton from '@/Components/common/PrimaryButton.vue';
+import Badge from "@/Components/common/Badge.vue";
+import Select from "@/Components/forms/Select.vue";
+import Toggle from "@/Components/Forms/Toggle.vue";
+import Accordeon  from "@/Components/common/Accordeon.vue"
+import Image from "@/Components/forms/Image.vue";
 
 const props = defineProps({ cars: Object });
 
@@ -14,11 +19,48 @@ const { cars } = toRefs(props);
 console.log(cars.value);
 
 
-const email = toRef('');
-const air = toRef('');
+const email = ref('');
+const air = ref('');
 
 const inputEvent = () =>{
 
+}
+
+// badge
+const deleteBadge = () =>{
+    console.log('delete Badge');
+}
+
+// select
+const people = [
+        { id: '', name: '-- Selecciona una persona --' },
+        { id: 1, name: 'Wade Cooper' },
+        { id: 2, name: 'Arlene Mccoy' },
+        { id: 3, name: 'Devon Webb' },
+        { id: 4, name: 'Tom Cook' },
+        { id: 5, name: 'Tanya Fox' },
+        { id: 6, name: 'Hellen Schmidt' },
+        { id: 7, name: 'Caroline Schultz' },
+        { id: 8, name: 'Mason Heaney' },
+        { id: 9, name: 'Claudie Smitham' },
+        { id: 10, name: 'Emil Schaefer' },
+    ];
+
+const peopleSelected = ref(null);
+
+const selectChange = (e) =>{
+    console.log('selectChange');
+    peopleSelected.value = e;
+}
+
+//image
+const changeImage = (e) =>{
+    console.log(e);
+}
+
+// button
+const clickButton = () =>{
+    console.log(peopleSelected);
 }
 </script>
 
@@ -136,38 +178,56 @@ const inputEvent = () =>{
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1">
-            <Input 
-                label="Codigo U."
-                @input="inputEvent"
-                v-model:input="email"
-                placeholder="user@example.com" 
-                :disabled="false"
-                error=""
-            />
-        </div>
-        <div class="grid grid-cols-1 my-6">
-            <Input 
-                label="Precios WOW"
-                type="date"
-                @input="inputEvent"
-                v-model:input="email"
-                placeholder="user@example.com" 
-                labelColor="text-brown-500"
-                :disabled="false"
-                error=""
-            />
-        </div>
-        <div class="grid grid-cols-1 my-6">
-            <Label>Aire acondicionado</Label>
-            <div class="flex">
-                <Checkbox label="SI" v-model:input="air" value="SI" class="mr-6"/> 
-                <Checkbox label="NO" v-model:input="air" value="NO"/> 
+        <Accordeon title="Banner Principal">
+            <div class="grid grid-cols-1 mb-6">
+                <Image :width="300" :height="250" url="" @imageChange="changeImage"/>
             </div>
-        </div>
+            <div class="grid grid-cols-1">
+                <Select label="Usuarios" @selected="selectChange" :options="people"/>
+            </div>
+            <div class="grid grid-cols-1 my-6">
+                <Label>Aire acondicionado</Label>
+                <div class="flex">
+                    <Checkbox label="SI" v-model:input="air" value="SI" class="mr-6"/> 
+                    <Checkbox label="NO" v-model:input="air" value="NO"/> 
+                </div>
+            </div>
+            <div class="grid grid-cols-1 my-6">
+                <Label>Oculto/Activo</Label>
+                <Toggle/>
+            </div>
+        </Accordeon>
+        <Accordeon title="Marcas">
+            <div class="grid grid-cols-1">
+                <Input 
+                    label="Codigo U."
+                    @input="inputEvent"
+                    v-model:input="email"
+                    placeholder="user@example.com" 
+                    :disabled="false"
+                    error=""
+                />
+            </div>
+            <div class="grid grid-cols-1 my-6">
+                <Input 
+                    label="Precios WOW"
+                    type="date"
+                    @input="inputEvent"
+                    v-model:input="email"
+                    placeholder="user@example.com" 
+                    labelColor="text-brown-500"
+                    :disabled="false"
+                    error=""
+                />
+                <div class="flex justify-start mt-2">
+                    <Badge @delete="deleteBadge">Fortuner</Badge>
+                </div>
+            </div>
+        </Accordeon>
+        
         <div class="flex my-6 gap-6">
             <PrimaryButton  icon="fa-solid fa-xmark-circle" width="max-w-[200px]" bg-color="bg-gray-400 hover:bg-gray-500">Cancelar</PrimaryButton>
-            <PrimaryButton  icon="fa-solid fa-floppy-disk" width="max-w-[200px]">Guardar</PrimaryButton>
+            <PrimaryButton  icon="fa-solid fa-floppy-disk" width="max-w-[200px]" @click="clickButton">Guardar</PrimaryButton>
         </div>
     </AppLayout>
 </template>
